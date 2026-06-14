@@ -1,0 +1,1140 @@
+/* ==========================================================================
+   UNDERPACE CSS STYLESHEET
+   ========================================================================== */
+
+/* ── 1. 디자인 시스템 & CSS 변수 정의 ── */
+:root {
+    /* 색상 정의 */
+    --color-bg: #080808;
+    --color-bg-offset: #121212;
+    --color-card: rgba(255, 255, 255, 0.03);
+    --color-card-hover: rgba(255, 255, 255, 0.06);
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-glow: rgba(204, 255, 0, 0.3);
+    
+    --color-text-primary: #ffffff;
+    --color-text-secondary: #a0a0a5;
+    --color-text-muted: #62626a;
+    
+    /* 브랜드 포인트 컬러 (Neon Lime & Warm Accent) */
+    --color-accent: #ccff00;
+    --color-accent-rgb: 204, 255, 0;
+    --color-secondary: #ff5a00;
+    
+    /* 폰트 지정 */
+    --font-head: 'Outfit', 'Noto Sans KR', sans-serif;
+    --font-body: 'Noto Sans KR', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+    
+    /* 트랜지션 규격 */
+    --transition-fast: 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-smooth: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── 2. 초기화 및 전역 스타일 (Reset & Base) ── */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--color-bg);
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-weight: 400;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* 스크롤바 디자인 */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+    background: #222;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input {
+    background: none;
+    border: none;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+/* ── 3. 공통 레이아웃 & 유틸리티 ── */
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 100px 24px;
+}
+
+/* 섹션 헤더 스타일 */
+.section-header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 64px auto;
+}
+
+.section-tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--color-accent);
+    display: inline-block;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.section-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1.25;
+    margin-bottom: 20px;
+}
+
+.section-desc {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    font-weight: 300;
+}
+
+/* 공통 버튼 디자인 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-family: var(--font-head);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 4px;
+    transition: all var(--transition-fast);
+}
+
+.btn-primary {
+    background-color: var(--color-accent);
+    color: #000000;
+    border: 1px solid var(--color-accent);
+}
+
+.btn-primary:hover {
+    background-color: transparent;
+    color: var(--color-accent);
+    box-shadow: 0 0 20px rgba(var(--color-accent-rgb), 0.35);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+    border-color: var(--color-text-primary);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* 스크롤 페이드인 기본 클래스 */
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s var(--transition-smooth), transform 0.8s var(--transition-smooth);
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ── 4. 헤더 (Header) 스타일 ── */
+.global-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 72px;
+    z-index: 1000;
+    border-bottom: 1px solid transparent;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.global-header.scrolled {
+    background-color: rgba(8, 8, 8, 0.75);
+    border-bottom-color: var(--color-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.header-container {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-img {
+    height: 32px;
+    width: auto;
+    display: block;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-link {
+    font-family: var(--font-head);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--color-text-secondary);
+    position: relative;
+    padding: 8px 0;
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--color-text-primary);
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--color-accent);
+    transition: width var(--transition-fast);
+}
+
+.nav-link.active::after, .nav-link:hover::after {
+    width: 100%;
+}
+
+.btn-join-nav {
+    background-color: var(--color-text-primary);
+    color: #000000;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-weight: 700;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.btn-join-nav::after {
+    display: none;
+}
+
+.btn-join-nav:hover {
+    background-color: var(--color-accent);
+    color: #000000;
+}
+
+/* 햄버거 토글 */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 24px;
+    height: 18px;
+    z-index: 1100;
+}
+
+.menu-toggle .bar {
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text-primary);
+    transition: all var(--transition-fast);
+}
+
+/* 햄버거 애니메이션 */
+.menu-toggle.active .bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+
+.menu-toggle.active .bar:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* ── 5. 모바일 메뉴 오버레이 스타일 ── */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--color-bg);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.mobile-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 36px;
+    text-align: center;
+}
+
+.mobile-link {
+    font-family: var(--font-head);
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.mobile-link:hover {
+    color: var(--color-text-primary);
+}
+
+.mobile-btn-join {
+    background-color: var(--color-accent);
+    color: #000;
+    padding: 12px 36px;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+/* ── 6. 히어로 섹션 (Hero) 스타일 ── */
+.hero-section {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding-top: 72px; /* 헤더 높이만큼 띄움 */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+/* 백그라운드 글로우 빔 */
+.background-glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(204, 255, 0, 0.045) 0%, rgba(204, 255, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 모던 스포티 그리드 패턴 */
+.grid-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: 50px 50px;
+    background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.hero-container {
+    position: relative;
+    max-width: 900px;
+    padding: 0 24px;
+    z-index: 2;
+}
+
+.hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--color-accent);
+    background: rgba(204, 255, 0, 0.05);
+    border: 1px solid rgba(204, 255, 0, 0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 28px;
+}
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    background-color: var(--color-accent);
+    border-radius: 50%;
+    display: inline-block;
+    box-shadow: 0 0 8px var(--color-accent);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(0.9); opacity: 0.6; }
+    50% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(0.9); opacity: 0.6; }
+}
+
+.hero-title {
+    font-family: var(--font-head);
+    font-size: clamp(40px, 8vw, 88px);
+    font-weight: 900;
+    letter-spacing: -3px;
+    line-height: 1.05;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+}
+
+.hero-title span {
+    color: var(--color-accent);
+    text-shadow: 0 0 40px rgba(var(--color-accent-rgb), 0.15);
+}
+
+.hero-subtitle {
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: var(--color-text-secondary);
+    font-weight: 300;
+    line-height: 1.7;
+    margin-bottom: 48px;
+}
+
+.hero-subtitle-logo {
+    height: 1.25em;
+    width: auto;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 4px;
+    position: relative;
+    top: -2px; /* 텍스트 베이스라인 미세 조정 */
+}
+
+.hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.hero-actions .btn {
+    min-width: 170px;
+}
+
+/* 스크롤 아래 유도선 */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 2;
+}
+
+.scroll-text {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--color-text-muted);
+}
+
+.scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--color-text-muted), transparent);
+    position: relative;
+    overflow: hidden;
+}
+
+.scroll-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: var(--color-accent);
+    animation: scroll-anim 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes scroll-anim {
+    0% { transform: translateY(-20px); }
+    80%, 100% { transform: translateY(50px); }
+}
+
+/* ── 7. 소개 섹션 (About) 스타일 ── */
+.about-section {
+    background-color: var(--color-bg-offset);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 80px;
+}
+
+.about-card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    padding: 40px 32px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-smooth);
+}
+
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition-smooth);
+}
+
+.about-card:hover {
+    background-color: var(--color-card-hover);
+    border-color: var(--color-border-glow);
+    transform: translateY(-5px);
+}
+
+.about-card:hover::before {
+    transform: scaleX(1);
+}
+
+.card-icon-wrap {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--color-accent);
+    margin-bottom: 32px;
+    transition: all var(--transition-fast);
+}
+
+.about-card:hover .card-icon-wrap {
+    background: rgba(var(--color-accent-rgb), 0.1);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
+}
+
+.about-card .card-title {
+    font-family: var(--font-head);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+}
+
+.about-card .card-text {
+    font-size: 15px;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: 24px;
+}
+
+.about-card .card-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+}
+
+.about-card:hover .card-tag {
+    color: var(--color-text-secondary);
+}
+
+/* 철학 인포 블록 */
+.philosophy-block {
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+    padding-top: 64px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.philosophy-quote {
+    font-family: var(--font-head);
+    font-size: clamp(20px, 3.5vw, 28px);
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.4;
+    margin-bottom: 16px;
+    color: var(--color-text-primary);
+}
+
+.philosophy-author {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--color-accent);
+    text-transform: uppercase;
+}
+
+/* ── 8. 일정 섹션 (Schedule) 스타일 ── */
+.schedule-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    margin-bottom: 48px;
+}
+
+.schedule-card {
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 40px;
+    position: relative;
+    transition: all var(--transition-smooth);
+}
+
+.schedule-card:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background-color: var(--color-card-hover);
+}
+
+.session-header-badge {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+}
+
+.session-time-area {
+    margin-bottom: 32px;
+}
+
+.day-label {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--color-accent);
+    letter-spacing: 2px;
+}
+
+.session-time {
+    font-family: var(--font-head);
+    font-size: 32px;
+    font-weight: 800;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.session-time i {
+    font-size: 24px;
+    color: var(--color-text-muted);
+}
+
+.session-details {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 32px;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    padding-bottom: 12px;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.detail-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-muted);
+}
+
+.detail-value {
+    font-size: 15px;
+    color: var(--color-text-primary);
+    font-weight: 400;
+}
+
+.highlight-location {
+    font-weight: 700;
+    color: var(--color-text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.highlight-location i {
+    color: var(--color-accent);
+}
+
+/* 토요일 세션 로테이션 안내 */
+.location-rotation {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.location-rotation span {
+    position: relative;
+    padding-left: 14px;
+}
+
+.location-rotation span::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--color-accent);
+}
+
+/* 칩 스타일 */
+.session-meta {
+    display: flex;
+    gap: 10px;
+}
+
+.badge-chip {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 6px 14px;
+    border-radius: 4px;
+}
+
+.coach-chip {
+    background-color: rgba(var(--color-accent-rgb), 0.1);
+    color: var(--color-accent);
+    border: 1px solid rgba(var(--color-accent-rgb), 0.2);
+}
+
+.level-easy {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.level-hard {
+    background-color: rgba(255, 90, 0, 0.1);
+    color: var(--color-secondary);
+    border: 1px solid rgba(255, 90, 0, 0.2);
+}
+
+/* 일정 하단 정보 메타 */
+.schedule-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background-color: var(--color-card);
+    border: 1px solid var(--color-border);
+    padding: 18px 24px;
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.schedule-notice a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    transition: color var(--transition-fast);
+}
+
+.schedule-notice a:hover {
+    color: var(--color-text-primary);
+}
+
+.schedule-notice i {
+    color: var(--color-accent);
+}
+
+/* ── 9. 가입 섹션 (Join) 스타일 ── */
+.join-section {
+    background-color: var(--color-bg-offset);
+    border-top: 1px solid var(--color-border);
+}
+
+.join-box {
+    position: relative;
+    background-color: #0b0b0b;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    padding: 80px 48px;
+    overflow: hidden;
+}
+
+.join-glow {
+    position: absolute;
+    bottom: -150px;
+    right: -150px;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(204, 255, 0, 0.06) 0%, rgba(204, 255, 0, 0) 70%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.join-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.join-tag {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: var(--color-accent);
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.join-title {
+    font-family: var(--font-head);
+    font-size: clamp(28px, 4.5vw, 48px);
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1.2;
+    margin-bottom: 24px;
+}
+
+.join-desc {
+    font-size: 17px;
+    color: var(--color-text-secondary);
+    font-weight: 300;
+    margin-bottom: 64px;
+    line-height: 1.7;
+}
+
+/* 가입 단계 3열 */
+.steps-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 64px;
+}
+
+.step-card {
+    background-color: rgba(255, 255, 255, 0.015);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    padding: 32px 24px;
+    border-radius: 4px;
+    text-align: left;
+    transition: all var(--transition-fast);
+}
+
+.step-card:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.step-num {
+    font-family: var(--font-mono);
+    font-size: 32px;
+    font-weight: 800;
+    color: var(--color-accent);
+    line-height: 1;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.step-title {
+    font-family: var(--font-head);
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.step-desc {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+.join-actions .btn-large {
+    font-size: 17px;
+    padding: 18px 40px;
+    box-shadow: 0 0 30px rgba(var(--color-accent-rgb), 0.15);
+}
+
+.join-actions .btn-large:hover {
+    box-shadow: 0 0 40px rgba(var(--color-accent-rgb), 0.4);
+}
+
+/* ── 10. 푸터 (Footer) 스타일 ── */
+.global-footer {
+    border-top: 1px solid var(--color-border);
+    background-color: var(--color-bg);
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 64px 24px;
+    text-align: center;
+}
+
+.footer-logo {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+}
+
+.footer-logo .logo-img {
+    height: 38px;
+    width: auto;
+    display: block;
+}
+
+.footer-tagline {
+    font-size: 14px;
+    color: var(--color-text-secondary);
+    margin-bottom: 32px;
+    font-weight: 300;
+}
+
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.footer-socials a {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--color-text-secondary);
+    transition: all var(--transition-fast);
+}
+
+.footer-socials a:hover {
+    color: #000;
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.4);
+}
+
+.footer-copyright {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--color-text-muted);
+}
+
+/* ── 11. 미디어 쿼리 (반응형 대응) ── */
+
+/* 1024px 이하 (태블릿 가로) */
+@media (max-width: 1024px) {
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+    
+    .about-card:nth-child(3) {
+        grid-column: span 2;
+    }
+    
+    .schedule-container {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+}
+
+/* 768px 이하 (태블릿 세로 및 대형 모바일) */
+@media (max-width: 768px) {
+    .section-container {
+        padding: 80px 20px;
+    }
+    
+    .global-header {
+        height: 64px;
+    }
+    
+    /* 헤더 메뉴 숨김 및 햄버거 토글 표시 */
+    .nav-menu {
+        display: none;
+    }
+    
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .hero-section {
+        padding-top: 64px;
+    }
+    
+    .hero-actions {
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
+    }
+    
+    .hero-actions .btn {
+        width: 100%;
+        max-width: 280px;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .about-card:nth-child(3) {
+        grid-column: span 1;
+    }
+    
+    .steps-container {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .join-box {
+        padding: 48px 24px;
+    }
+    
+    .detail-row {
+        grid-template-columns: 80px 1fr;
+    }
+}
+
+/* 480px 이하 (스마트폰 최적화) */
+@media (max-width: 480px) {
+    .section-header {
+        margin-bottom: 40px;
+    }
+    
+    .about-card {
+        padding: 32px 24px;
+    }
+    
+    .schedule-card {
+        padding: 24px;
+    }
+    
+    .session-header-badge {
+        position: relative;
+        top: 0;
+        right: 0;
+        display: inline-block;
+        margin-bottom: 16px;
+    }
+    
+    .session-time {
+        font-size: 26px;
+    }
+    
+    .detail-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+    
+    .detail-label {
+        font-size: 12px;
+    }
+    
+    .detail-value {
+        font-size: 14px;
+    }
+    
+    .session-meta {
+        flex-wrap: wrap;
+    }
+    
+    .schedule-notice {
+        flex-direction: column;
+        text-align: center;
+        padding: 16px;
+        font-size: 13px;
+    }
+    
+    .footer-socials {
+        gap: 16px;
+    }
+}

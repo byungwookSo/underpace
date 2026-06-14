@@ -16,9 +16,9 @@
     --color-text-secondary: #a0a0a5;
     --color-text-muted: #62626a;
     
-    /* 브랜드 포인트 컬러 (Neon Lime & Warm Accent) */
-    --color-accent: #ccff00;
-    --color-accent-rgb: 204, 255, 0;
+    /* 브랜드 포인트 컬러 (Neon Blue & Warm Accent) */
+    --color-accent: #00f0ff;
+    --color-accent-rgb: 0, 240, 255;
     --color-secondary: #ff5a00;
     
     /* 폰트 지정 */
